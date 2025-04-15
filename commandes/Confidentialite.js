@@ -57,8 +57,8 @@ ovlcmd(
       };
 
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, presence: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1', presence: 'non' },
       });
 
       if (sousCommande === 'off') {
@@ -105,8 +105,8 @@ ovlcmd(
 
       const sousCommande = arg[0]?.toLowerCase();
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, lecture_status: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1', lecture_status: 'non' },
       });
 
       if (sousCommande === 'off') {
@@ -147,8 +147,8 @@ ovlcmd(
 
       const sousCommande = arg[0]?.toLowerCase();
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, dl_status: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1', dl_status: 'non' },
       });
 
       if (sousCommande === 'off') {
@@ -189,8 +189,8 @@ ovlcmd(
 
       const sousCommande = arg[0]?.toLowerCase();
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, like_status: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1', like_status: 'non' },
       });
 
       if (sousCommande === 'off') {

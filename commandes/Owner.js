@@ -498,8 +498,8 @@ ovlcmd(
       };
 
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, antidelete: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1' , antidelete: 'non' },
       });
 
       if (sousCommande === 'off') {
@@ -560,8 +560,8 @@ ovlcmd(
       const validtypes = ['on', 'off'];
 
       const [settings] = await WA_CONF.findOrCreate({
-        where: { id: jid },
-        defaults: { id: jid, antivv: 'non' },
+        where: { id: '1' },
+        defaults: { id: '1', antivv: 'non' },
       });
 
       if (validtypes.includes(sousCommande)) {

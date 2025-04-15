@@ -274,16 +274,16 @@ ovlcmd(
       const renderCommit = await getRenderCommit();
       const gitCommit = await getGitCommit();
     console.log(renderCommit, gitCommit);
-      if (renderCommit == gitCommit) {
+   /*   if (renderCommit == gitCommit) {
         return ovl.sendMessage(ms_org, {
           text: "Le bot est déjà à jour",
         }, { quoted: ms });
-      } else {
+      } else {*/
         const deployResult = await deployRender();
         return ovl.sendMessage(ms_org, {
           text: deployResult
         }, { quoted: ms });
-      }
+  //    }
     } catch (error) {
       console.error(error);
       return ovl.sendMessage(ms_org, {
