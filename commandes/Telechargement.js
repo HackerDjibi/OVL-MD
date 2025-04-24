@@ -4,23 +4,45 @@ const ytsr = require('@distube/ytsr');
 const axios = require('axios');
 const { search, download } = require("aptoide_scrapper_fixed");
 const fs = require("fs");
+const path = require("path");
+
+const tmp = path.join(__dirname, "../temp");
+if (!fs.existsSync(tmp)) fs.mkdirSync(tmp);
 
 async function sendMedia(ms_org, ovl, url, format, type, ms) {
   try {
     const downloadLink = await axios.get(`https://glad-atlanta-ovl-9417f8d8.koyeb.app/ovl-yt-dl?url=${url}&format=${format}`);
+    
     if (!downloadLink.data.url) {
       throw new Error("Le lien de téléchargement est introuvable.");
     }
 
-    const response = await axios.get(downloadLink.data.url, { responseType: 'arraybuffer' });
-    const med_buff = Buffer.from(response.data);
+    const fileName = `media_${Date.now()}.${format === "weba" ? "mp3" : "mp4"}`;
+    const filePath = path.join(tmp, fileName);
+ 
+    const response = await axios({
+      method: 'GET',
+      url: downloadLink.data.url,
+      responseType: 'stream'
+    });
+
+    const writer = fs.createWriteStream(filePath);
+    response.data.pipe(writer);
+
+    await new Promise((resolve, reject) => {
+      writer.on('finish', resolve);
+      writer.on('error', reject);
+    });
+ 
     const message = {
-      [type]: med_buff,
+      [type]: { url: filePath },
       mimetype: format === "weba" ? "audio/mpeg" : "video/mp4",
       caption: `\`\`\`Powered By OVL-MD\`\`\``
     };
 
-    return await ovl.sendMessage(ms_org, message, { quoted: ms });
+    await ovl.sendMessage(ms_org, message, { quoted: ms });
+ 
+    fs.unlinkSync(filePath);
   } catch (error) {
     console.error("Erreur lors de l'envoi du média:", error.message);
     throw error;
